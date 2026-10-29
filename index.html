@@ -1,11 +1,208 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My Website</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday! 🎂</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Trebuchet MS', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3, #a18cd1);
+            color: white;
+        }
+
+        .card {
+            width: 90%;
+            max-width: 650px;
+            padding: 40px 20px;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.17);
+            border: 2px solid rgba(255,255,255,0.5);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: clamp(2.2rem, 7vw, 3.5rem);
+            margin-bottom: 15px;
+            animation: glow 2s infinite alternate;
+        }
+
+        .cake {
+            font-size: 100px;
+            margin: 20px 0;
+            animation: bounce 1.5s infinite;
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .name {
+            color: #fff176;
+            font-weight: bold;
+        }
+
+        button {
+            border: none;
+            padding: 15px 28px;
+            border-radius: 30px;
+            background: #fff176;
+            color: #7b236d;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.08);
+        }
+
+        #message {
+            margin-top: 25px;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .balloon {
+            position: fixed;
+            bottom: -150px;
+            font-size: 55px;
+            animation: floatUp 9s linear infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 5px #fff; }
+            to { text-shadow: 0 0 25px #fff176; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes floatUp {
+            from { transform: translateY(0) rotate(0); }
+            to { transform: translateY(-120vh) rotate(25deg); }
+        }
+
+        .confetti {
+            position: fixed;
+            top: -20px;
+            width: 10px;
+            height: 15px;
+            animation: fall 4s linear forwards;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        footer {
+            margin-top: 25px;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
-<body style="font-family: Arial; text-align: center; padding: 50px;">
-  <h1>Welcome to My Website!</h1>
-  <p>My website is working successfully!</p>
-  <button onclick="alert('It works!')">Click Me</button>
+
+<body>
+
+    <div class="card">
+        <h1>🎉 Happy Birthday! 🎉</h1>
+
+        <p>
+            Today is a special day for
+            <span class="name" id="birthdayName">Someone Special</span>!
+        </p>
+
+        <div class="cake">🎂</div>
+
+        <p>
+            May your life be filled with happiness, love,
+            laughter, success, and beautiful memories.
+            Keep smiling and shining every day! ✨
+        </p>
+
+        <button onclick="celebrate()">
+            🎊 Let's Celebrate!
+        </button>
+
+        <div id="message"></div>
+
+        <footer>Made with ❤️ just for you!</footer>
+    </div>
+
+    <script>
+        // Change the name here!
+        document.getElementById("birthdayName").textContent =
+            "Your Name";
+
+        function celebrate() {
+            document.getElementById("message").textContent =
+                "🎉 HAPPY BIRTHDAY! 🎉 Make a wish! 🌟";
+
+            const colors = [
+                "#ffeb3b", "#ff4081", "#00e5ff",
+                "#76ff03", "#ffffff", "#ff9100"
+            ];
+
+            for (let i = 0; i < 120; i++) {
+                const confetti = document.createElement("div");
+                confetti.className = "confetti";
+                confetti.style.left = Math.random() * 100 + "vw";
+                confetti.style.backgroundColor =
+                    colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay =
+                    Math.random() * 2 + "s";
+                confetti.style.animationDuration =
+                    (3 + Math.random() * 3) + "s";
+
+                document.body.appendChild(confetti);
+
+                setTimeout(() => confetti.remove(), 7000);
+            }
+        }
+
+        // Floating balloons
+        for (let i = 0; i < 12; i++) {
+            const balloon = document.createElement("div");
+            balloon.className = "balloon";
+            balloon.textContent = ["🎈", "🎈", "🎈", "🎉"][
+                Math.floor(Math.random() * 4)
+            ];
+            balloon.style.left = Math.random() * 95 + "vw";
+            balloon.style.animationDelay = Math.random() * 9 + "s";
+            balloon.style.animationDuration =
+                (7 + Math.random() * 6) + "s";
+
+            document.body.appendChild(balloon);
+        }
+    </script>
+
 </body>
 </html>
