@@ -1,390 +1,226 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Bestie 💗</title>
+<title>Happy Birthday Kukdi 🐥</title>
 
 <style>
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  font-family: 'Trebuchet MS', sans-serif;
-  background: linear-gradient(135deg, #ffe0ec, #e9d9ff);
-  color: #663d63;
-  text-align: center;
-  overflow-x: hidden;
+    font-family: 'Trebuchet MS', sans-serif;
+    background: linear-gradient(135deg, #fff4c7, #ffe0b2, #fff0d9);
+    color: #704214;
+    text-align: center;
+    overflow-x: hidden;
 }
 
-section {
-  padding: 65px 20px;
-  min-height: 70vh;
-}
-
-.hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #ffb6d2, #cbb4ff);
+header {
+    padding: 35px 15px;
 }
 
 h1 {
-  font-size: clamp(2.5rem, 8vw, 4.5rem);
-  color: #fff;
-  text-shadow: 2px 3px 10px #9c5795;
+    font-size: clamp(35px, 8vw, 65px);
+    color: #ff8c00;
+    text-shadow: 2px 3px white;
 }
 
-h2 {
-  color: #c04d91;
-  font-size: 2rem;
-  margin-bottom: 20px;
+.subtitle {
+    font-size: 18px;
+    margin-top: 12px;
 }
 
-p {
-  line-height: 1.7;
-  margin: 15px auto;
-  max-width: 650px;
+.hero {
+    padding: 20px;
 }
 
-button {
-  padding: 14px 25px;
-  border: none;
-  border-radius: 30px;
-  background: #ff5e9e;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  margin: 12px;
-  box-shadow: 0 5px 15px #bd75a555;
+.chicken {
+    font-size: 100px;
+    animation: bounce 1.5s infinite;
 }
 
-button:hover {
-  transform: scale(1.06);
-  background: #df3980;
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-18px); }
 }
 
 .card {
-  max-width: 650px;
-  margin: 25px auto;
-  padding: 30px;
-  background: #ffffffdd;
-  border-radius: 25px;
-  box-shadow: 0 8px 25px #a66c9a33;
+    background: white;
+    max-width: 450px;
+    margin: 20px auto;
+    padding: 25px;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px #d9a44155;
 }
 
-.gift {
-  font-size: 100px;
-  cursor: pointer;
-  transition: .4s;
+.photo {
+    width: 100%;
+    max-width: 280px;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 20px;
+    border: 6px solid #ffd166;
 }
 
-.gift:hover {
-  transform: rotate(12deg) scale(1.15);
+h2 {
+    color: #ff8c00;
+    margin: 18px 0;
 }
 
-.hidden {
-  display: none;
+.message {
+    line-height: 1.8;
+    font-size: 17px;
 }
 
-.reason {
-  background: white;
-  margin: 10px auto;
-  padding: 15px;
-  max-width: 500px;
-  border-radius: 15px;
+button {
+    background: #ff9800;
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 30px;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 20px 5px;
+    box-shadow: 0 5px 12px #0002;
 }
 
-.cake {
-  font-size: 110px;
-  cursor: pointer;
+button:hover {
+    background: #ed7800;
+    transform: scale(1.05);
 }
 
-.letter {
-  text-align: left;
-  line-height: 2;
+#surprise {
+    display: none;
+    padding: 20px;
+    font-size: 20px;
+    color: #e07800;
+    line-height: 1.7;
 }
 
-.countdown {
-  font-size: 2rem;
-  color: #bd4289;
-  font-weight: bold;
+.chicks {
+    font-size: 45px;
+    margin: 20px;
 }
 
 footer {
-  padding: 25px;
-  background: #f9c6dc;
+    padding: 25px;
+    background: #ffcf70;
+    margin-top: 30px;
 }
 
-#confetti {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 10;
-}
-
-.confetti-piece {
-  position: absolute;
-  top: -20px;
-  width: 9px;
-  height: 14px;
-  animation: fall 3s linear forwards;
+.confetti {
+    position: fixed;
+    top: -20px;
+    animation: fall linear infinite;
+    pointer-events: none;
+    z-index: 5;
 }
 
 @keyframes fall {
-  to {
-    transform: translateY(110vh) rotate(720deg);
-  }
+    to {
+        transform: translateY(110vh) rotate(720deg);
+    }
 }
 
-.balloon {
-  position: fixed;
-  bottom: -100px;
-  font-size: 40px;
-  animation: floatUp 12s linear infinite;
-  z-index: 0;
-  pointer-events: none;
+@media(max-width: 500px) {
+    .card {
+        margin: 15px;
+    }
 }
-
-@keyframes floatUp {
-  to { transform: translateY(-120vh); }
-}
-
 </style>
 </head>
 
 <body>
 
-<div id="confetti"></div>
+<header>
+    <div class="chicken">🐥</div>
+    <h1>Happy Birthday!</h1>
+    <p class="subtitle">Today is all about our special Kukdi ❤️</p>
+</header>
 
-<!-- WELCOME SCREEN -->
-<section class="hero" id="home">
-  <p>✨ A special surprise is waiting ✨</p>
-  <h1>Happy Birthday!</h1>
-  <h1 id="name">Bestie 💗</h1>
-  <p>Today is all about YOU!</p>
-  <button onclick="start()">Open Your Surprise 🎁</button>
-</section>
-
-<!-- GIFT -->
-<section>
-  <h2>🎁 A Little Gift For You</h2>
-  <div class="card">
-    <div class="gift" onclick="openGift()">🎁</div>
-    <p id="giftText">Tap the gift to open it!</p>
-  </div>
-</section>
-
-<!-- COUNTDOWN -->
-<section>
-  <h2>⏳ Birthday Countdown</h2>
-  <div class="card">
-    <div class="countdown" id="timer">Loading...</div>
-    <p>Waiting for your special day!</p>
-  </div>
-</section>
-
-<!-- CAKE -->
-<section>
-  <h2>🎂 Make A Wish!</h2>
-  <div class="card">
-    <div class="cake" onclick="blow()">🎂</div>
-    <button onclick="blow()">Blow Out Candles 🕯️</button>
-    <p id="wish">Make a beautiful wish!</p>
-  </div>
-</section>
-
-<!-- REASONS -->
-<section>
-  <h2>💗 10 Reasons Why You're Special</h2>
-  <button onclick="showReasons()">Reveal The Reasons</button>
-  <div id="reasons" class="card hidden">
-    <div class="reason">1. Your beautiful smile 😊</div>
-    <div class="reason">2. Your kindness 💕</div>
-    <div class="reason">3. Your funny nature 😂</div>
-    <div class="reason">4. You make life brighter ☀️</div>
-    <div class="reason">5. Your caring heart 💗</div>
-    <div class="reason">6. Your amazing personality 🌸</div>
-    <div class="reason">7. Our endless conversations 💬</div>
-    <div class="reason">8. Our unforgettable memories 📸</div>
-    <div class="reason">9. You are one of a kind 🌟</div>
-    <div class="reason">10. You are simply YOU! 🫶</div>
-  </div>
-</section>
-
-<!-- LETTER -->
-<section>
-  <h2>💌 A Letter For You</h2>
-  <div class="card letter">
-    Dear Bestie,
-
-    Happy Birthday! 💗
-
-    I hope your day is filled with happiness,
-    laughter, love and beautiful memories.
-
-    Thank you for being such an important
-    part of my life.
-
-    May all your dreams come true.
-    Keep smiling and shining always!
-
-    With lots of love,
-    Your Best Friend 💕
-  </div>
-</section>
-
-<!-- SECRET MESSAGE -->
-<section>
-  <h2>🤫 A Secret Message</h2>
-  <div class="card">
-    <button onclick="secret()">Unlock Secret 💝</button>
-    <p id="secretText" class="hidden">
-      No matter what happens, you'll always
-      have a special place in my life.
-      I'm lucky to have you! 💗
-    </p>
-  </div>
-</section>
-
-<!-- PLAYLIST -->
-<section>
-  <h2>🎵 Our Friendship Playlist</h2>
-  <div class="card">
-    <p>Our favourite songs belong here!</p>
-    <p>🎶 Song 1</p>
-    <a href="https://www.youtube.com/" target="_blank">Play a song ▶</a>
-    <p>🎶 Song 2</p>
-    <a href="https://www.youtube.com/" target="_blank">Play a song ▶</a>
-    <p>🎶 Song 3</p>
-    <a href="https://www.youtube.com/" target="_blank">Play a song ▶</a>
-  </div>
-</section>
-
-<!-- FINAL SURPRISE -->
 <section class="hero">
-  <h1>One Last Surprise! 💖</h1>
-  <div class="card">
-    <h2>YOU ARE AMAZING!</h2>
-    <p>
-      Happy Birthday, Bestie!
-      May your life always be full of
-      happiness, success and beautiful moments.
-    </p>
-    <button onclick="celebrate()">Celebrate Again 🎉</button>
-  </div>
+
+    <div class="card">
+        <img src="kukdi.jpg" alt="Birthday Girl" class="photo">
+
+        <h2>Our Favourite Kukdi 🐣</h2>
+
+        <p class="message">
+            A little mischief, unlimited smiles
+            and a personality that makes every
+            moment special!
+            <br><br>
+            Today is your day. Enjoy every moment!
+        </p>
+
+        <div class="chicks">🐥 🐣 🐤</div>
+
+        <button onclick="showSurprise()">
+            🎁 Open Your Surprise
+        </button>
+
+        <div id="surprise">
+            <h2>Surprise!! 🎉</h2>
+
+            May your life always be filled with
+            happiness, success, laughter and
+            beautiful memories.
+
+            <br><br>
+
+            Keep smiling, keep shining and
+            never stop being YOU!
+
+            <br><br>
+
+            Lots of love! ❤️
+
+            <h2>Happy Birthday, Kukdi! 🐥</h2>
+        </div>
+    </div>
+
 </section>
+
+<div class="chicks">
+    🐔 🐥 🐣 🐥 🐔
+</div>
 
 <footer>
-  Made with 💗 for my favourite person.
+    <h2>Made with ❤️ for our Kukdi</h2>
+    <p>One special day. Countless beautiful memories.</p>
 </footer>
 
 <script>
+function showSurprise() {
+    document.getElementById("surprise").style.display = "block";
 
-// PERSONAL DETAILS
-const BESTIE_NAME = "[Best Friend's Name]";
+    for(let i = 0; i < 60; i++) {
+        let confetti = document.createElement("div");
+        confetti.className = "confetti";
+        confetti.innerHTML = ["🎉","💛","🐥","✨","🎊"][
+            Math.floor(Math.random() * 5)
+        ];
 
-// Change this to the birthday date:
-const BIRTHDAY = "2026-12-31T00:00:00";
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.animationDuration =
+            (2 + Math.random() * 4) + "s";
 
-document.getElementById("name").textContent =
-  BESTIE_NAME === "[Best Friend's Name]"
-  ? "Bestie 💗"
-  : BESTIE_NAME + " 💗";
+        document.body.appendChild(confetti);
 
-function start() {
-  document.querySelectorAll("section")[1]
-    .scrollIntoView({behavior:"smooth"});
-  celebrate();
+        setTimeout(() => confetti.remove(), 6000);
+    }
+
+    document.getElementById("surprise").scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
 }
-
-function openGift() {
-  document.getElementById("giftText").innerHTML =
-    "SURPRISE! 🎉 You deserve all the happiness in the world! 💗";
-  celebrate();
-}
-
-function blow() {
-  document.getElementById("wish").innerHTML =
-    "✨ Your wish has been sent to the universe! 💗";
-  celebrate();
-}
-
-function showReasons() {
-  document.getElementById("reasons").classList.remove("hidden");
-}
-
-function secret() {
-  document.getElementById("secretText").classList.remove("hidden");
-  celebrate();
-}
-
-function celebrate() {
-  const colors = ["#ff5e9e", "#c9a5ff", "#ffd166", "#ffffff"];
-
-  for(let i=0; i<100; i++) {
-    const piece = document.createElement("div");
-    piece.className = "confetti-piece";
-    piece.style.left = Math.random()*100 + "vw";
-    piece.style.background =
-      colors[Math.floor(Math.random()*colors.length)];
-    piece.style.animationDelay = Math.random()*1.5 + "s";
-
-    document.getElementById("confetti").appendChild(piece);
-
-    setTimeout(() => piece.remove(), 4500);
-  }
-}
-
-// COUNTDOWN
-function updateTimer() {
-  const target = new Date(BIRTHDAY).getTime();
-  const now = Date.now();
-  const difference = target - now;
-
-  const timer = document.getElementById("timer");
-
-  if (isNaN(target)) {
-    timer.textContent = "Set a valid birthday date!";
-    return;
-  }
-
-  if(difference <= 0) {
-    timer.textContent = "IT'S YOUR BIRTHDAY! 🎂";
-    return;
-  }
-
-  const days = Math.floor(difference / 86400000);
-  const hours = Math.floor((difference % 86400000) / 3600000);
-  const minutes = Math.floor((difference % 3600000) / 60000);
-  const seconds = Math.floor((difference % 60000) / 1000);
-
-  timer.textContent =
-    days+"d : "+hours+"h : "+minutes+"m : "+seconds+"s";
-}
-
-updateTimer();
-setInterval(updateTimer, 1000);
-
-// FLOATING BALLOONS
-setInterval(() => {
-  const balloon = document.createElement("div");
-  balloon.className = "balloon";
-  balloon.textContent = "🎈";
-  balloon.style.left = Math.random()*100 + "vw";
-
-  document.body.appendChild(balloon);
-
-  setTimeout(() => balloon.remove(), 12000);
-}, 1800);
-
 </script>
 
 </body>
-</html>
+      </html>
