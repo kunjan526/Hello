@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Kukdi 🐥</title>
+
+<title>The Kukdi Birthday Adventure 🐔</title>
 
 <style>
+
 * {
     margin: 0;
     padding: 0;
@@ -14,213 +17,574 @@
 
 body {
     font-family: 'Trebuchet MS', sans-serif;
-    background: linear-gradient(135deg, #fff4c7, #ffe0b2, #fff0d9);
-    color: #704214;
-    text-align: center;
+    background: linear-gradient(135deg,#fff0b3,#ffd6a5,#ffedc2);
+    min-height: 100vh;
     overflow-x: hidden;
+    color: #713d12;
 }
 
-header {
-    padding: 35px 15px;
+.scene {
+    display: none;
+    min-height: 100vh;
+    width: 100%;
+    padding: 30px 18px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.scene.active {
+    display: flex;
+    animation: appear 0.7s ease;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: scale(0.92);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 h1 {
-    font-size: clamp(35px, 8vw, 65px);
-    color: #ff8c00;
-    text-shadow: 2px 3px white;
+    font-size: clamp(30px,7vw,55px);
+    color: #ff7900;
+    margin: 18px 0;
 }
 
-.subtitle {
+h2 {
+    color: #f07800;
+    margin: 15px 0;
+    font-size: 28px;
+}
+
+p {
     font-size: 18px;
-    margin-top: 12px;
+    line-height: 1.7;
+    max-width: 550px;
+    margin: 10px auto;
 }
 
-.hero {
-    padding: 20px;
+button {
+    background: linear-gradient(135deg,#ff9800,#ff6500);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 35px;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 12px;
+    cursor: pointer;
+    box-shadow: 0 6px 15px #0002;
+    transition: 0.3s;
 }
 
-.chicken {
+button:hover {
+    transform: scale(1.07);
+}
+
+.character {
     font-size: 100px;
     animation: bounce 1.5s infinite;
 }
 
 @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
+    0%,100% { transform: translateY(0); }
     50% { transform: translateY(-18px); }
 }
 
 .card {
-    background: white;
-    max-width: 450px;
-    margin: 20px auto;
-    padding: 25px;
+    background: rgba(255,255,255,0.9);
+    padding: 28px 20px;
     border-radius: 25px;
-    box-shadow: 0 10px 30px #d9a44155;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: 0 12px 35px #ad6a2530;
 }
+
+.decor {
+    position: absolute;
+    font-size: 35px;
+    animation: float 4s infinite ease-in-out;
+    pointer-events: none;
+}
+
+@keyframes float {
+    50% {
+        transform: translateY(-22px) rotate(15deg);
+    }
+}
+
+.d1 { top: 8%; left: 8%; }
+.d2 { top: 15%; right: 8%; }
+.d3 { bottom: 10%; left: 10%; }
+.d4 { bottom: 12%; right: 10%; }
+
+.small {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* SCENE 1 */
+
+.car {
+    font-size: 95px;
+    animation: drive 2.5s ease-in-out;
+}
+
+@keyframes drive {
+    0% { transform: translateX(-100vw); }
+    75% { transform: translateX(20px); }
+    100% { transform: translateX(0); }
+}
+
+/* SCENE 3 */
+
+.hint {
+    background: #fff4d2;
+    padding: 15px;
+    margin: 12px auto;
+    border-radius: 15px;
+    max-width: 400px;
+    font-size: 17px;
+}
+
+/* SCENE 4 */
+
+.reveal {
+    font-size: clamp(45px,12vw,85px);
+    font-weight: bold;
+    color: #ff7900;
+    animation: zoom 1.2s infinite alternate;
+}
+
+@keyframes zoom {
+    to { transform: scale(1.08); }
+}
+
+/* SCENE 5 */
 
 .photo {
-    width: 100%;
-    max-width: 280px;
-    height: 320px;
+    width: 230px;
+    height: 280px;
     object-fit: cover;
-    border-radius: 20px;
-    border: 6px solid #ffd166;
+    border: 8px solid #ffca65;
+    border-radius: 25px;
+    display: block;
+    margin: 20px auto;
 }
 
-h2 {
-    color: #ff8c00;
-    margin: 18px 0;
+input[type=file] {
+    max-width: 100%;
+    margin: 15px;
 }
 
-.message {
-    line-height: 1.8;
-    font-size: 17px;
+/* SCENE 7 */
+
+.cake {
+    font-size: 110px;
+    animation: bounce 1s infinite;
 }
 
-button {
-    background: #ff9800;
-    color: white;
-    border: none;
-    padding: 15px 25px;
-    border-radius: 30px;
-    font-size: 17px;
-    cursor: pointer;
-    margin: 20px 5px;
-    box-shadow: 0 5px 12px #0002;
-}
-
-button:hover {
-    background: #ed7800;
-    transform: scale(1.05);
-}
-
-#surprise {
-    display: none;
-    padding: 20px;
-    font-size: 20px;
-    color: #e07800;
-    line-height: 1.7;
-}
-
-.chicks {
-    font-size: 45px;
-    margin: 20px;
-}
-
-footer {
-    padding: 25px;
-    background: #ffcf70;
-    margin-top: 30px;
-}
+/* CONFETTI */
 
 .confetti {
     position: fixed;
     top: -20px;
-    animation: fall linear infinite;
+    font-size: 23px;
     pointer-events: none;
-    z-index: 5;
+    animation: fall 4s linear forwards;
+    z-index: 100;
 }
 
 @keyframes fall {
     to {
         transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
     }
 }
 
-@media(max-width: 500px) {
+@media(max-width:500px) {
+    .character {
+        font-size: 80px;
+    }
+
     .card {
-        margin: 15px;
+        padding: 22px 15px;
     }
 }
+
 </style>
 </head>
 
 <body>
 
-<header>
-    <div class="chicken">🐥</div>
-    <h1>Happy Birthday!</h1>
-    <p class="subtitle">Today is all about our special Kukdi ❤️</p>
-</header>
+<!-- SCENE 1 : WELCOME -->
 
-<section class="hero">
+<section class="scene active" id="scene1">
 
-    <div class="card">
-        <img src="kukdi.jpg" alt="Birthday Girl" class="photo">
+<div class="decor d1">🐣</div>
+<div class="decor d2">🎈</div>
+<div class="decor d3">🌼</div>
+<div class="decor d4">🐥</div>
 
-        <h2>Our Favourite Kukdi 🐣</h2>
+<div class="card">
 
-        <p class="message">
-            A little mischief, unlimited smiles
-            and a personality that makes every
-            moment special!
-            <br><br>
-            Today is your day. Enjoy every moment!
-        </p>
+<h2>🚨 SPECIAL ANNOUNCEMENT 🚨</h2>
 
-        <div class="chicks">🐥 🐣 🐤</div>
+<div class="car">🚗🌈</div>
 
-        <button onclick="showSurprise()">
-            🎁 Open Your Surprise
-        </button>
+<div class="character">🐔😎</div>
 
-        <div id="surprise">
-            <h2>Surprise!! 🎉</h2>
+<h1>CLUCK CLUCK!!</h1>
 
-            May your life always be filled with
-            happiness, success, laughter and
-            beautiful memories.
+<p>
+Hello Everyone!!
+<br>
+Your favourite superstar has arrived!
+<br><br>
+I've got the BIGGEST news of the day!
+</p>
 
-            <br><br>
+<p><b>RUKIYEEE!! 🎭</b></p>
 
-            Keep smiling, keep shining and
-            never stop being YOU!
+<button onclick="nextScene(2)">
+Let's Find Out! 🐣
+</button>
 
-            <br><br>
-
-            Lots of love! ❤️
-
-            <h2>Happy Birthday, Kukdi! 🐥</h2>
-        </div>
-    </div>
+</div>
 
 </section>
 
-<div class="chicks">
-    🐔 🐥 🐣 🐥 🐔
+
+<!-- SCENE 2 : BREAKING NEWS -->
+
+<section class="scene" id="scene2">
+
+<div class="decor d1">🚨</div>
+<div class="decor d2">🎊</div>
+
+<div class="card">
+
+<div class="character">🐔😎</div>
+
+<h1>BREAKING NEWS!</h1>
+
+<p>
+Attention Everyone!!
+<br><br>
+Our chicken news agency has received
+some VERY important information!
+</p>
+
+<h2>🎂</h2>
+
+<p>
+Someone is celebrating their birthday today!
+</p>
+
+<p>
+And this celebration is going to be
+SUPER SPECIAL!
+</p>
+
+<button onclick="nextScene(3)">
+Tell Me More! 👀
+</button>
+
 </div>
 
-<footer>
-    <h2>Made with ❤️ for our Kukdi</h2>
-    <p>One special day. Countless beautiful memories.</p>
-</footer>
+</section>
+
+
+<!-- SCENE 3 : GUESSING GAME -->
+
+<section class="scene" id="scene3">
+
+<div class="card">
+
+<div class="character">🐔🤔</div>
+
+<h1>Guess Who?</h1>
+
+<p>
+Our superstar has some clues for you!
+</p>
+
+<div class="hint">
+🐥 Clue 1: Someone whose nickname
+is related to our feathered friends!
+</div>
+
+<div class="hint">
+😂 Clue 2: Someone who makes
+our memories more special!
+</div>
+
+<div class="hint">
+🎉 Clue 3: Today is her special day!
+</div>
+
+<p><b>Have you guessed it?</b></p>
+
+<button onclick="nextScene(4)">
+Reveal The Mystery! 🎁
+</button>
+
+</div>
+
+</section>
+
+
+<!-- SCENE 4 : BIRTHDAY REVEAL -->
+
+<section class="scene" id="scene4">
+
+<div class="decor d1">🎈</div>
+<div class="decor d2">🐣</div>
+<div class="decor d3">🎊</div>
+
+<div class="card">
+
+<div class="character">🐔🎉</div>
+
+<h2>THE MOMENT HAS ARRIVED!</h2>
+
+<p>Today's birthday superstar is...</p>
+
+<div class="reveal">KUKDI!</div>
+
+<h1>🎂🎉❤️</h1>
+
+<p>
+HAPPY BIRTHDAY!
+</p>
+
+<button onclick="nextScene(5)">
+See The Birthday Star! 📸
+</button>
+
+</div>
+
+</section>
+
+
+<!-- SCENE 5 : PHOTO -->
+
+<section class="scene" id="scene5">
+
+<div class="card">
+
+<div class="character">🐥📸</div>
+
+<h1>Our Birthday Star!</h1>
+
+<p>
+Every picture tells a beautiful story.
+</p>
+
+<img
+id="birthdayPhoto"
+class="photo"
+src=""
+alt="Birthday Girl"
+style="display:none"
+>
+
+<p id="photoText">
+Choose her photograph to display it here!
+</p>
+
+<input
+type="file"
+accept="image/*"
+onchange="loadPhoto(event)"
+>
+
+<button onclick="nextScene(6)">
+Continue ❤️
+</button>
+
+</div>
+
+</section>
+
+
+<!-- SCENE 6 : SPECIAL MESSAGE -->
+
+<section class="scene" id="scene6">
+
+<div class="card">
+
+<div class="character">🐔💛</div>
+
+<h1>A Little Message</h1>
+
+<p>
+To our one and only Kukdi!
+</p>
+
+<p>
+A little mischief, unlimited smiles
+and a personality that makes
+every moment special.
+</p>
+
+<p>
+May your life always be filled with
+happiness, success, laughter and
+beautiful memories.
+</p>
+
+<p>
+Keep smiling, keep shining
+and never stop being YOU!
+</p>
+
+<h2>Lots of Love! ❤️</h2>
+
+<button onclick="nextScene(7)">
+One Last Surprise! 🎁
+</button>
+
+</div>
+
+</section>
+
+
+<!-- SCENE 7 : GRAND CELEBRATION -->
+
+<section class="scene" id="scene7">
+
+<div class="decor d1">🎈</div>
+<div class="decor d2">🎊</div>
+<div class="decor d3">🐣</div>
+<div class="decor d4">💛</div>
+
+<div class="card">
+
+<div class="cake">🎂</div>
+
+<h1>HAPPY BIRTHDAY!</h1>
+
+<h2>OUR KUKDI 🐥</h2>
+
+<p>
+May this year bring you
+lots of happiness, wonderful
+opportunities and unforgettable memories!
+</p>
+
+<h1>🎉🎈🎊</h1>
+
+<div class="character">🐔😎</div>
+
+<p>
+Your superstar chicken wishes you
+an amazing birthday!
+</p>
+
+<button onclick="celebrate()">
+Celebrate Again! 🎊
+</button>
+
+</div>
+
+</section>
+
 
 <script>
-function showSurprise() {
-    document.getElementById("surprise").style.display = "block";
 
-    for(let i = 0; i < 60; i++) {
-        let confetti = document.createElement("div");
-        confetti.className = "confetti";
-        confetti.innerHTML = ["🎉","💛","🐥","✨","🎊"][
-            Math.floor(Math.random() * 5)
-        ];
+/* CHANGE SCENES */
 
-        confetti.style.left = Math.random() * 100 + "vw";
-        confetti.style.animationDuration =
-            (2 + Math.random() * 4) + "s";
+function nextScene(number) {
 
-        document.body.appendChild(confetti);
+    document.querySelectorAll(".scene").forEach(scene => {
+        scene.classList.remove("active");
+    });
 
-        setTimeout(() => confetti.remove(), 6000);
+    document.getElementById("scene" + number)
+        .classList.add("active");
+
+    window.scrollTo(0,0);
+
+    if(number === 7) {
+        celebrate();
     }
 
-    document.getElementById("surprise").scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-    });
 }
+
+
+/* LOAD BIRTHDAY PHOTO */
+
+function loadPhoto(event) {
+
+    const file = event.target.files[0];
+
+    if(!file) return;
+
+    if(!file.type.startsWith("image/")) {
+        alert("Please select an image!");
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+
+        const photo = document.getElementById("birthdayPhoto");
+
+        photo.src = e.target.result;
+
+        photo.style.display = "block";
+
+        document.getElementById("photoText")
+            .innerText = "Our special birthday star! ❤️";
+
+    };
+
+    reader.readAsDataURL(file);
+
+}
+
+
+/* CONFETTI CELEBRATION */
+
+function celebrate() {
+
+    const emojis = ["🎉","🎊","💛","🎈","🐥","✨","🌼"];
+
+    for(let i=0; i<80; i++) {
+
+        let item = document.createElement("div");
+
+        item.className = "confetti";
+
+        item.innerText =
+            emojis[Math.floor(Math.random()*emojis.length)];
+
+        item.style.left = Math.random()*100 + "vw";
+
+        item.style.animationDuration =
+            (2 + Math.random()*4) + "s";
+
+        document.body.appendChild(item);
+
+        setTimeout(() => {
+            item.remove();
+        },6000);
+
+    }
+
+}
+
 </script>
 
 </body>
-      </html>
+    </html>
