@@ -260,9 +260,7 @@
    Use the publishable/anon key, NEVER the service_role key.
 ===================================================== */
 
-const SUPABASE_URL = "https://vpbshuebzdrwmoljnwzc.supabase.co
-
-  ";
+const SUPABASE_URL = "https://vpbshuebzdrwmoljnwzc.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwYnNodWViemRyd21vbGpud3pjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTUzNDA0OTEsImV4cCI6MjExMDkxNjQ5MX0.gjisEnA9gLrfmHHz8bllMuzAY-PiAGT2R_7Vub6M3RU";
 
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -321,28 +319,57 @@ function startRefresh() {
   }, 15000);
 }
 
+
 /* =====================================================
    3. AUTHENTICATION
 ===================================================== */
 
 $("loginBtn").addEventListener("click", async () => {
+
+  // If signup form is open, return to login
+  if (!$("signupFields").classList.contains("hidden")) {
+    $("signupFields").classList.add("hidden");
+    $("authTitle").textContent = "Welcome back";
+    $("signupBtn").textContent = "Create owner account";
+    $("loginBtn").textContent = "Login";
+    $("authMessage").textContent = "";
+    return;
+  }
+
   const email = $("email").value.trim();
   const password = $("password").value;
 
   if (!email || !password) {
-    message("authMessage", "Enter your email and password.", true);
+    message("authMessage", "Enter email and password.", true);
     return;
   }
 
   $("loginBtn").disabled = true;
-  const { error } = await db.auth.signInWithPassword({ email, password });
-  $("loginBtn").disabled = false;
+  message("authMessage", "Logging in...");
 
-  if (error) message("authMessage", error.message, true);
+  try {
+    const { error } = await db.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) {
+      message("authMessage", error.message, true);
+    } else {
+      message("authMessage", "Login successful!");
+    }
+  } catch (error) {
+    message("authMessage", error.message, true);
+  } finally {
+    $("loginBtn").disabled = false;
+  }
 });
 
+
 $("signupBtn").addEventListener("click", async () => {
-  const isSignup = !$("signupFields").classList.contains("hidden");
+
+  const isSignup =
+    !$("signupFields").classList.contains("hidden");
 
   if (!isSignup) {
     $("signupFields").classList.remove("hidden");
@@ -367,35 +394,40 @@ $("signupBtn").addEventListener("click", async () => {
   }
 
   $("signupBtn").disabled = true;
-  const { data, error } = await db.auth.signUp({
-    email,
-    password,
-    options: { data: { full_name: fullName } }
-  });
-  $("signupBtn").disabled = false;
+  message("authMessage", "Creating account...");
 
-  if (error) {
+  try {
+    const { data, error } = await db.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { full_name: fullName }
+      }
+    });
+
+    if (error) {
+      message("authMessage", error.message, true);
+    } else if (data.session) {
+      message("authMessage", "Account created successfully.");
+    } else {
+      message(
+        "authMessage",
+        "Account created! Check your email for confirmation."
+      );
+
+      $("signupFields").classList.add("hidden");
+      $("authTitle").textContent = "Welcome back";
+      $("signupBtn").textContent = "Create owner account";
+      $("loginBtn").textContent = "Login";
+    }
+
+  } catch (error) {
     message("authMessage", error.message, true);
-  } else if (data.session) {
-    message("authMessage", "Account created successfully.");
-  } else {
-    message("authMessage", "Account created. Check your email to confirm it, then log in.");
-    $("signupFields").classList.add("hidden");
-    $("authTitle").textContent = "Welcome back";
-    $("signupBtn").textContent = "Create owner account";
-    $("loginBtn").textContent = "Login";
+  } finally {
+    $("signupBtn").disabled = false;
   }
 });
 
-$("loginBtn").addEventListener("click", () => {
-  if (!$("signupFields").classList.contains("hidden")) {
-    $("signupFields").classList.add("hidden");
-    $("authTitle").textContent = "Welcome back";
-    $("signupBtn").textContent = "Create owner account";
-    $("loginBtn").textContent = "Login";
-    $("authMessage").textContent = "";
-  }
-});
 
 /* =====================================================
    4. SESSION AND ROLE CHECK
