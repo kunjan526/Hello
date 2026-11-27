@@ -2,842 +2,948 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Parking System</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartPark - Smart Parking System</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f1f5f9;
-      color: #172033;
-    }
-    header {
-      background: #102b50;
-      color: white;
-      padding: 18px 22px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    header h2 { margin: 0; font-size: 21px; }
-    main { max-width: 1100px; margin: 25px auto; padding: 0 15px; }
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 14px;
-      margin-bottom: 18px;
-      box-shadow: 0 3px 14px #0000000c;
-    }
-    .auth-card { max-width: 430px; margin: 45px auto; }
-    h2, h3 { margin-top: 0; }
-    input, select {
-      width: 100%;
-      padding: 12px;
-      margin: 7px 0 14px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      font-size: 15px;
-      background: white;
-    }
-    button {
-      border: 0;
-      border-radius: 8px;
-      padding: 11px 16px;
-      background: #2563eb;
-      color: white;
-      font-size: 14px;
-      cursor: pointer;
-      margin: 4px 3px 4px 0;
-    }
-    button:hover { opacity: .9; }
-    button.secondary { background: #475569; }
-    button.danger { background: #dc2626; }
-    button.success { background: #15803d; }
-    .hidden { display: none !important; }
-    .muted { color: #64748b; font-size: 14px; }
-    .message { margin: 12px 0; font-size: 14px; }
-    .error { color: #dc2626; }
-    .ok { color: #15803d; }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 14px;
-    }
-    .stat {
-      background: #eff6ff;
-      padding: 17px;
-      border-radius: 12px;
-    }
-    .stat strong { display: block; font-size: 24px; margin-top: 8px; }
-    .slot {
-      border: 1px solid #dbe3ed;
-      border-radius: 12px;
-      padding: 14px;
-      background: #f8fafc;
-    }
-    .available { color: #15803d; }
-    .occupied { color: #dc2626; }
-    .maintenance { color: #b45309; }
-    .table-wrap { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; min-width: 550px; }
-    th, td {
-      text-align: left;
-      padding: 11px;
-      border-bottom: 1px solid #e2e8f0;
-      font-size: 14px;
-    }
-    th { background: #f8fafc; }
-    label { font-size: 14px; font-weight: bold; }
-    .tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 15px; }
-    .tabs button { background: #475569; }
-    @media (min-width: 800px) {
-      .manager-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-    }
-  </style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f9;
+  color: #263238;
+}
+
+header {
+  background: white;
+  padding: 18px 6%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1769aa;
+}
+
+.logo span {
+  color: #263238;
+}
+
+header button {
+  border: none;
+  background: #1769aa;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 35px auto;
+  padding: 0 18px;
+}
+
+h1 {
+  margin-bottom: 10px;
+  font-size: 27px;
+}
+
+.subtitle {
+  color: #718096;
+  margin-bottom: 25px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.card {
+  background: white;
+  padding: 23px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 20px;
+}
+
+.card h2 {
+  font-size: 19px;
+  margin-bottom: 17px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.stat {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.stat p {
+  color: #718096;
+  font-size: 14px;
+}
+
+.stat h2 {
+  font-size: 27px;
+  margin-top: 9px;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 15px;
+  background: white;
+}
+
+label {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.btn {
+  padding: 11px 17px;
+  background: #1769aa;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  margin: 3px;
+}
+
+.btn:hover {
+  opacity: .85;
+}
+
+.btn-green {
+  background: #188653;
+}
+
+.btn-red {
+  background: #d94848;
+}
+
+.btn-gray {
+  background: #64748b;
+}
+
+.slots {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.slot {
+  border: 1px solid #dce3eb;
+  padding: 18px 8px;
+  text-align: center;
+  border-radius: 8px;
+  background: #f0faf4;
+}
+
+.slot.occupied {
+  background: #fff0f0;
+  border-color: #f1caca;
+}
+
+.slot h3 {
+  margin-bottom: 10px;
+}
+
+.available {
+  color: #16834b;
+  font-weight: bold;
+}
+
+.occupied-text {
+  color: #d94848;
+  font-weight: bold;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th, td {
+  padding: 12px 8px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+th {
+  background: #f8fafc;
+}
+
+.result {
+  background: #f0f7ff;
+  padding: 18px;
+  border-radius: 8px;
+  margin-top: 15px;
+  line-height: 1.8;
+}
+
+nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+nav button {
+  border: 1px solid #dce3eb;
+  background: white;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+nav button.active {
+  background: #1769aa;
+  color: white;
+}
+
+footer {
+  text-align: center;
+  color: #718096;
+  padding: 25px;
+  font-size: 13px;
+}
+
+.message {
+  margin: 10px 0;
+  color: #d94848;
+  font-size: 14px;
+}
+
+@media(max-width:650px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .slots {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  header {
+    padding: 15px;
+  }
+
+  .container {
+    margin-top: 22px;
+  }
+
+  table {
+    min-width: 520px;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+  }
+}
+</style>
 </head>
 
 <body>
+
 <header>
-  <h2>🚗 Smart Parking System</h2>
-  <div>
-    <span id="userLabel" class="muted" style="color:white"></span>
-    <button id="logoutBtn" class="secondary hidden">Logout</button>
-  </div>
+  <div class="logo">Smart<span>Park</span></div>
+  <button onclick="showHome()">Home</button>
 </header>
 
-<main>
-  <!-- LOGIN / SIGNUP -->
-  <section id="authSection" class="card auth-card">
-    <h2 id="authTitle">Welcome back</h2>
-    <p class="muted">Sign in to access your parking dashboard.</p>
+<!-- HOME PAGE -->
 
-    <div id="signupFields" class="hidden">
-      <label>Full name</label>
-      <input id="fullName" placeholder="Your full name">
-    </div>
+<div class="container" id="home">
 
-    <label>Email</label>
-    <input id="email" type="email" placeholder="Email address" autocomplete="email">
+  <h1>Smart Parking System</h1>
+  <p class="subtitle">
+    Intelligent vehicle identification and autonomous parking management.
+  </p>
 
-    <label>Password</label>
-    <input id="password" type="password" placeholder="Password" autocomplete="current-password">
+  <div class="grid">
 
-    <button id="loginBtn">Login</button>
-    <button id="signupBtn" class="secondary">Create owner account</button>
-    <p id="authMessage" class="message"></p>
-    <p class="muted">Manager accounts must be created and assigned the manager role in Supabase.</p>
-  </section>
-
-  <!-- OWNER DASHBOARD -->
-  <section id="ownerDashboard" class="hidden">
     <div class="card">
-      <h2>Owner Dashboard</h2>
-      <p class="muted">Your vehicle and parking information.</p>
+      <h2>Car Owner</h2>
+      <p class="subtitle">Identify your vehicle using your RFID card.</p>
+
+      <label>RFID Card Number</label>
+      <input id="ownerRFID" placeholder="Enter RFID card UID">
+
+      <button class="btn" onclick="ownerLogin()">
+        Identify Vehicle
+      </button>
+
+      <div id="ownerMessage" class="message"></div>
     </div>
+
+    <div class="card">
+      <h2>Parking Manager</h2>
+      <p class="subtitle">Access parking management dashboard.</p>
+
+      <label>Username</label>
+      <input id="managerUser" placeholder="Username">
+
+      <label>Password</label>
+      <input id="managerPass" type="password" placeholder="Password">
+
+      <button class="btn" onclick="managerLogin()">
+        Manager Login
+      </button>
+
+      <div id="managerMessage" class="message"></div>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h2>About SmartPark</h2>
+    <p>
+      SmartPark is an autonomous smart parking prototype.
+      It identifies vehicles, manages parking slots and
+      monitors vehicle information.
+    </p>
+  </div>
+
+</div>
+
+<!-- OWNER DASHBOARD -->
+
+<div class="container hidden" id="ownerDashboard">
+
+  <h1>Owner Dashboard</h1>
+  <p class="subtitle">Your vehicle information and parking status.</p>
+
+  <div class="card">
+    <h2>Vehicle Information</h2>
+    <div id="ownerDetails"></div>
+  </div>
+
+  <div class="grid">
+
+    <div class="stat">
+      <p>Assigned Parking Slot</p>
+      <h2 id="ownerSlot">-</h2>
+    </div>
+
+    <div class="stat">
+      <p>Battery Voltage</p>
+      <h2 id="ownerBattery">-- V</h2>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h2>Parking Status</h2>
+    <h3 id="ownerStatus">Waiting</h3>
+    <p class="subtitle" id="ownerStatusInfo"></p>
+  </div>
+
+  <button class="btn btn-gray" onclick="showHome()">Logout</button>
+
+</div>
+
+<!-- MANAGER DASHBOARD -->
+
+<div class="container hidden" id="managerDashboard">
+
+  <h1>Manager Dashboard</h1>
+  <p class="subtitle">Manage vehicles and parking facilities.</p>
+
+  <nav>
+    <button class="active" onclick="showTab('overview',this)">Overview</button>
+    <button onclick="showTab('vehicles',this)">Vehicles</button>
+    <button onclick="showTab('register',this)">Register Vehicle</button>
+    <button onclick="showTab('records',this)">Records</button>
+  </nav>
+
+  <!-- OVERVIEW -->
+
+  <section id="overview" class="tab">
 
     <div class="grid">
-      <div class="stat">Battery voltage<strong id="ownerVoltage">-- V</strong></div>
-      <div class="stat">Battery percentage<strong id="ownerBattery">--%</strong></div>
-      <div class="stat">Vehicle status<strong id="ownerCarStatus">--</strong></div>
-      <div class="stat">Parking slot<strong id="ownerSlot">Not parked</strong></div>
-    </div>
 
-    <div class="card">
-      <h3>Register your vehicle</h3>
-      <label>Vehicle name</label>
-      <input id="vehicleName" placeholder="Example: My Smart Car">
-      <label>Vehicle number</label>
-      <input id="vehicleNumber" placeholder="Example: GJ05AB1234">
-      <button id="registerVehicleBtn">Register vehicle</button>
-      <p id="vehicleMessage" class="message"></p>
-    </div>
-
-    <div class="card">
-      <h3>My vehicles</h3>
-      <div id="ownerVehicles" class="muted">Loading...</div>
-    </div>
-
-    <div class="card">
-      <h3>Parking history</h3>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Slot</th><th>Entry</th><th>Exit</th><th>Status</th></tr></thead>
-          <tbody id="ownerHistory"></tbody>
-        </table>
+      <div class="stat">
+        <p>Total Parking Slots</p>
+        <h2 id="totalSlots">4</h2>
       </div>
+
+      <div class="stat">
+        <p>Available Slots</p>
+        <h2 id="availableSlots">4</h2>
+      </div>
+
+      <div class="stat">
+        <p>Occupied Slots</p>
+        <h2 id="occupiedSlots">0</h2>
+      </div>
+
+      <div class="stat">
+        <p>Registered Vehicles</p>
+        <h2 id="totalVehicles">0</h2>
+      </div>
+
     </div>
+
+    <div class="card">
+      <h2>Parking Slot Status</h2>
+      <div class="slots" id="slotDisplay"></div>
+    </div>
+
+    <div class="card">
+      <h2>System Information</h2>
+      <p>System: SmartPark Prototype</p>
+      <p>Vehicle control: ESP32</p>
+      <p>Motor driver: L298N</p>
+      <p>Parking monitoring: Demo mode</p>
+    </div>
+
   </section>
 
-  <!-- MANAGER DASHBOARD -->
-  <section id="managerDashboard" class="hidden">
-    <div class="card">
-      <h2>Parking Manager Dashboard</h2>
-      <p class="muted">Manage parking slots, vehicles and parking sessions.</p>
-      <button id="refreshBtn">Refresh data</button>
-    </div>
+  <!-- VEHICLES -->
 
-    <div class="grid">
-      <div class="stat">Total slots<strong id="totalSlots">10</strong></div>
-      <div class="stat">Available<strong id="availableSlots">--</strong></div>
-      <div class="stat">Occupied<strong id="occupiedSlots">--</strong></div>
-      <div class="stat">Registered vehicles<strong id="totalVehicles">--</strong></div>
-    </div>
-
-    <div class="manager-layout">
-      <div class="card">
-        <h3>Parking slots</h3>
-        <div id="slotGrid" class="grid">Loading slots...</div>
-      </div>
-
-      <div class="card">
-        <h3>Update slot status</h3>
-        <label>Select slot</label>
-        <select id="statusSlot"></select>
-        <label>New status</label>
-        <select id="newSlotStatus">
-          <option value="available">Available</option>
-          <option value="occupied">Occupied</option>
-          <option value="maintenance">Maintenance</option>
-        </select>
-        <button id="updateSlotBtn">Update slot</button>
-        <p id="slotMessage" class="message"></p>
-      </div>
-    </div>
+  <section id="vehicles" class="tab hidden">
 
     <div class="card">
-      <h3>Start a parking session</h3>
-      <label>Select vehicle</label>
-      <select id="sessionVehicle"></select>
-      <label>Select available slot</label>
-      <select id="sessionSlot"></select>
-      <button id="startSessionBtn" class="success">Record vehicle entry</button>
-      <p id="sessionMessage" class="message"></p>
-    </div>
-
-    <div class="card">
-      <h3>Active parking sessions</h3>
+      <h2>Registered Vehicles</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Vehicle</th><th>Slot</th><th>Entry time</th><th>Action</th></tr></thead>
-          <tbody id="activeSessions"></tbody>
+          <thead>
+            <tr>
+              <th>Owner</th>
+              <th>Vehicle</th>
+              <th>Number</th>
+              <th>RFID UID</th>
+              <th>Slot</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="vehicleTable"></tbody>
         </table>
       </div>
     </div>
 
-    <div class="card">
-      <h3>Registered vehicles</h3>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Vehicle</th><th>Number</th><th>Owner</th></tr></thead>
-          <tbody id="managerVehicles"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="card">
-      <h3>Latest vehicle readings</h3>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Vehicle ID</th><th>Voltage</th><th>Battery</th><th>Motor</th><th>Car status</th><th>Updated</th></tr></thead>
-          <tbody id="managerLiveData"></tbody>
-        </table>
-      </div>
-    </div>
   </section>
-</main>
+
+  <!-- REGISTER VEHICLE -->
+
+  <section id="register" class="tab hidden">
+
+    <div class="card">
+      <h2>Register New Vehicle</h2>
+
+      <label>Owner Name</label>
+      <input id="newOwner" placeholder="Enter owner name">
+
+      <label>Vehicle Name</label>
+      <input id="newVehicle" placeholder="Example: Maruti Swift">
+
+      <label>Vehicle Number</label>
+      <input id="newNumber" placeholder="Example: MH01AB1234">
+
+      <label>RFID Card UID</label>
+      <input id="newRFID" placeholder="Enter unique RFID UID">
+
+      <button class="btn btn-green" onclick="registerVehicle()">
+        Register Vehicle
+      </button>
+
+      <div id="registerMessage" class="message"></div>
+    </div>
+
+  </section>
+
+  <!-- RECORDS -->
+
+  <section id="records" class="tab hidden">
+
+    <div class="card">
+      <h2>Parking History</h2>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Vehicle</th>
+              <th>Vehicle Number</th>
+              <th>Slot</th>
+              <th>Event</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody id="historyTable"></tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </section>
+
+  <button class="btn btn-gray" onclick="showHome()">Logout</button>
+
+</div>
+
+<footer>
+  SmartPark © 2026 | Smart Parking Science Fair Project
+</footer>
 
 <script>
-/* =====================================================
-   1. SUPABASE CONFIGURATION
-   Replace these two values with your own project details.
-   Use the publishable/anon key, NEVER the service_role key.
-===================================================== */
 
-const SUPABASE_URL = "https://vpbshuebzdrwmoljnwzc.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZwYnNodWViemRyd21vbGpud3pjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTUzNDA0OTEsImV4cCI6MjExMDkxNjQ5MX0.gjisEnA9gLrfmHHz8bllMuzAY-PiAGT2R_7Vub6M3RU";
+// =================================
+// DATA STORAGE
+// =================================
 
-const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const defaultVehicles = [
+  {
+    id: 1,
+    owner: "Demo Owner",
+    vehicle: "Demo Car",
+    number: "MH01AB1234",
+    rfid: "12345678",
+    slot: 1,
+    status: "Parked",
+    battery: 11.8
+  }
+];
 
-let currentUser = null;
-let currentRole = null;
-let refreshTimer = null;
-let ownerVehicleList = [];
-let managerVehicleList = [];
-let managerSlotList = [];
-let activeSessionList = [];
+function loadData(key, fallback) {
+  const saved = localStorage.getItem(key);
 
-/* =====================================================
-   2. SMALL HELPER FUNCTIONS
-===================================================== */
+  if (saved) {
+    try {
+      return JSON.parse(saved);
+    } catch(e) {
+      return fallback;
+    }
+  }
 
-const $ = id => document.getElementById(id);
+  return fallback;
+}
 
-function safe(value) {
-  return String(value ?? "").replace(/[&<>"']/g, char => ({
+let vehicles = loadData("sp_vehicles", defaultVehicles);
+let history = loadData("sp_history", []);
+let slotCount = 4;
+
+function saveData() {
+  localStorage.setItem("sp_vehicles", JSON.stringify(vehicles));
+  localStorage.setItem("sp_history", JSON.stringify(history));
+}
+
+function logEvent(vehicle, event) {
+
+  history.unshift({
+    vehicle: vehicle.vehicle,
+    number: vehicle.number,
+    slot: vehicle.slot || "-",
+    event: event,
+    time: new Date().toLocaleString()
+  });
+
+  saveData();
+}
+
+// =================================
+// PAGE CONTROL
+// =================================
+
+function hideAll() {
+
+  document.getElementById("home").classList.add("hidden");
+  document.getElementById("ownerDashboard").classList.add("hidden");
+  document.getElementById("managerDashboard").classList.add("hidden");
+
+}
+
+function showHome() {
+
+  hideAll();
+
+  document.getElementById("home").classList.remove("hidden");
+
+  document.getElementById("ownerRFID").value = "";
+  document.getElementById("managerPass").value = "";
+
+}
+
+function showTab(tabName, button) {
+
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.classList.add("hidden");
+  });
+
+  document.getElementById(tabName).classList.remove("hidden");
+
+  document.querySelectorAll("nav button").forEach(btn => {
+    btn.classList.remove("active");
+  });
+
+  button.classList.add("active");
+
+}
+
+// =================================
+// OWNER RFID LOGIN
+// =================================
+
+function ownerLogin() {
+
+  const uid = document.getElementById("ownerRFID").value.trim().toUpperCase();
+
+  const message = document.getElementById("ownerMessage");
+
+  if (!uid) {
+    message.innerText = "Please enter your RFID number.";
+    return;
+  }
+
+  const vehicle = vehicles.find(v =>
+    String(v.rfid).trim().toUpperCase() === uid
+  );
+
+  if (!vehicle) {
+    message.innerText = "RFID card not registered.";
+    return;
+  }
+
+  hideAll();
+
+  document.getElementById("ownerDashboard").classList.remove("hidden");
+
+  document.getElementById("ownerDetails").innerHTML = `
+    <p><b>Owner:</b> ${escapeHTML(vehicle.owner)}</p>
+    <p><b>Vehicle:</b> ${escapeHTML(vehicle.vehicle)}</p>
+    <p><b>Number:</b> ${escapeHTML(vehicle.number)}</p>
+    <p><b>RFID:</b> ${escapeHTML(vehicle.rfid)}</p>
+  `;
+
+  document.getElementById("ownerSlot").innerText =
+    vehicle.slot ? "Slot " + vehicle.slot : "Not assigned";
+
+  document.getElementById("ownerBattery").innerText =
+    Number(vehicle.battery || 0).toFixed(2) + " V";
+
+  document.getElementById("ownerStatus").innerText = vehicle.status;
+
+  document.getElementById("ownerStatusInfo").innerText =
+    vehicle.status === "Parked"
+      ? "Your vehicle is parked."
+      : "Your vehicle is not currently parked.";
+
+}
+
+// =================================
+// MANAGER LOGIN
+// =================================
+
+function managerLogin() {
+
+  const user = document.getElementById("managerUser").value.trim();
+  const pass = document.getElementById("managerPass").value;
+
+  const message = document.getElementById("managerMessage");
+
+  // DEMO LOGIN ONLY
+
+  if (user === "manager" && pass === "park123") {
+
+    hideAll();
+
+    document.getElementById("managerDashboard").classList.remove("hidden");
+
+    refreshDashboard();
+
+  } else {
+
+    message.innerText = "Incorrect username or password.";
+
+  }
+
+}
+
+// =================================
+// REGISTER VEHICLE
+// =================================
+
+function registerVehicle() {
+
+  const owner = document.getElementById("newOwner").value.trim();
+  const vehicle = document.getElementById("newVehicle").value.trim();
+  const number = document.getElementById("newNumber").value.trim().toUpperCase();
+  const rfid = document.getElementById("newRFID").value.trim().toUpperCase();
+
+  const message = document.getElementById("registerMessage");
+
+  if (!owner || !vehicle || !number || !rfid) {
+    message.innerText = "Please fill all fields.";
+    return;
+  }
+
+  if (vehicles.some(v =>
+    String(v.rfid).toUpperCase() === rfid ||
+    String(v.number).toUpperCase() === number
+  )) {
+    message.innerText = "RFID or vehicle number already registered.";
+    return;
+  }
+
+  vehicles.push({
+    id: Date.now(),
+    owner,
+    vehicle,
+    number,
+    rfid,
+    slot: null,
+    status: "Not Parked",
+    battery: 0
+  });
+
+  saveData();
+
+  message.style.color = "green";
+  message.innerText = "Vehicle registered successfully!";
+
+  document.getElementById("newOwner").value = "";
+  document.getElementById("newVehicle").value = "";
+  document.getElementById("newNumber").value = "";
+  document.getElementById("newRFID").value = "";
+
+  refreshDashboard();
+
+}
+
+// =================================
+// PARKING SLOT DISPLAY
+// =================================
+
+function refreshDashboard() {
+
+  const occupied = vehicles.filter(v => v.slot !== null).length;
+
+  document.getElementById("totalSlots").innerText = slotCount;
+  document.getElementById("occupiedSlots").innerText = occupied;
+  document.getElementById("availableSlots").innerText = slotCount - occupied;
+  document.getElementById("totalVehicles").innerText = vehicles.length;
+
+  const display = document.getElementById("slotDisplay");
+
+  display.innerHTML = "";
+
+  for (let i = 1; i <= slotCount; i++) {
+
+    const vehicle = vehicles.find(v => Number(v.slot) === i);
+
+    const div = document.createElement("div");
+
+    div.className = vehicle ? "slot occupied" : "slot";
+
+    div.innerHTML = `
+      <h3>Slot ${i}</h3>
+      <p class="${vehicle ? "occupied-text" : "available"}">
+        ${vehicle ? "Occupied" : "Available"}
+      </p>
+      <small>${vehicle ? escapeHTML(vehicle.number) : "Empty"}</small>
+    `;
+
+    display.appendChild(div);
+
+  }
+
+  renderVehicles();
+  renderHistory();
+
+}
+
+// =================================
+// VEHICLE TABLE
+// =================================
+
+function renderVehicles() {
+
+  const table = document.getElementById("vehicleTable");
+
+  table.innerHTML = "";
+
+  vehicles.forEach(v => {
+
+    const row = document.createElement("tr");
+
+    const action = document.createElement("td");
+
+    const select = document.createElement("select");
+
+    select.style.width = "95px";
+    select.style.margin = "0";
+
+    const empty = document.createElement("option");
+    empty.value = "";
+    empty.textContent = "No slot";
+    select.appendChild(empty);
+
+    for (let i = 1; i <= slotCount; i++) {
+
+      const option = document.createElement("option");
+
+      option.value = i;
+      option.textContent = "Slot " + i;
+
+      const usedByOther = vehicles.some(other =>
+        other.id !== v.id && Number(other.slot) === i
+      );
+
+      option.disabled = usedByOther;
+
+      if (Number(v.slot) === i) option.selected = true;
+
+      select.appendChild(option);
+
+    }
+
+    select.addEventListener("change", () => {
+
+      const newSlot = select.value ? Number(select.value) : null;
+
+      if (newSlot !== null) {
+
+        const conflict = vehicles.some(other =>
+          other.id !== v.id && Number(other.slot) === newSlot
+        );
+
+        if (conflict) {
+          alert("This parking slot is already occupied.");
+          refreshDashboard();
+          return;
+        }
+
+      }
+
+      const oldSlot = v.slot;
+
+      v.slot = newSlot;
+
+      v.status = newSlot ? "Parked" : "Not Parked";
+
+      logEvent(
+        v,
+        newSlot
+          ? (oldSlot ? "Slot changed to " + newSlot : "Vehicle parked")
+          : "Vehicle removed from slot"
+      );
+
+      refreshDashboard();
+
+    });
+
+    const deleteButton = document.createElement("button");
+
+    deleteButton.className = "btn btn-red";
+    deleteButton.textContent = "Delete";
+
+    deleteButton.onclick = () => {
+
+      if (!confirm("Delete this vehicle?")) return;
+
+      vehicles = vehicles.filter(item => item.id !== v.id);
+
+      logEvent(v, "Vehicle registration deleted");
+
+      saveData();
+      refreshDashboard();
+
+    };
+
+    action.appendChild(select);
+    action.appendChild(deleteButton);
+
+    row.innerHTML = `
+      <td>${escapeHTML(v.owner)}</td>
+      <td>${escapeHTML(v.vehicle)}</td>
+      <td>${escapeHTML(v.number)}</td>
+      <td>${escapeHTML(v.rfid)}</td>
+    `;
+
+    row.appendChild(action);
+
+    table.appendChild(row);
+
+  });
+
+}
+
+// =================================
+// HISTORY
+// =================================
+
+function renderHistory() {
+
+  const table = document.getElementById("historyTable");
+
+  table.innerHTML = "";
+
+  history.forEach(item => {
+
+    const row = document.createElement("tr");
+
+    [
+      item.vehicle,
+      item.number,
+      item.slot,
+      item.event,
+      item.time
+    ].forEach(value => {
+
+      const td = document.createElement("td");
+      td.textContent = value;
+      row.appendChild(td);
+
+    });
+
+    table.appendChild(row);
+
+  });
+
+}
+
+// =================================
+// HTML OUTPUT SAFETY
+// =================================
+
+function escapeHTML(value) {
+
+  return String(value).replace(/[&<>"']/g, char => ({
     "&": "&amp;",
     "<": "&lt;",
     ">": "&gt;",
     '"': "&quot;",
     "'": "&#39;"
   })[char]);
+
 }
 
-function message(id, text, isError = false) {
-  $(id).textContent = text;
-  $(id).className = "message " + (isError ? "error" : "ok");
-}
+// =================================
+// START
+// =================================
 
-function dateText(value) {
-  if (!value) return "--";
-  return new Date(value).toLocaleString();
-}
+showHome();
 
-function showOnly(sectionId) {
-  ["authSection", "ownerDashboard", "managerDashboard"].forEach(id => {
-    $(id).classList.add("hidden");
-  });
-  $(sectionId).classList.remove("hidden");
-}
-
-function stopRefresh() {
-  if (refreshTimer) clearInterval(refreshTimer);
-  refreshTimer = null;
-}
-
-function startRefresh() {
-  stopRefresh();
-  refreshTimer = setInterval(() => {
-    if (currentRole === "owner") loadOwnerDashboard();
-    if (currentRole === "manager") loadManagerDashboard();
-  }, 15000);
-}
-
-
-/* =====================================================
-   3. AUTHENTICATION
-===================================================== */
-
-$("loginBtn").addEventListener("click", async () => {
-
-  // If signup form is open, return to login
-  if (!$("signupFields").classList.contains("hidden")) {
-    $("signupFields").classList.add("hidden");
-    $("authTitle").textContent = "Welcome back";
-    $("signupBtn").textContent = "Create owner account";
-    $("loginBtn").textContent = "Login";
-    $("authMessage").textContent = "";
-    return;
-  }
-
-  const email = $("email").value.trim();
-  const password = $("password").value;
-
-  if (!email || !password) {
-    message("authMessage", "Enter email and password.", true);
-    return;
-  }
-
-  $("loginBtn").disabled = true;
-  message("authMessage", "Logging in...");
-
-  try {
-    const { error } = await db.auth.signInWithPassword({
-      email,
-      password
-    });
-
-    if (error) {
-      message("authMessage", error.message, true);
-    } else {
-      message("authMessage", "Login successful!");
-    }
-  } catch (error) {
-    message("authMessage", error.message, true);
-  } finally {
-    $("loginBtn").disabled = false;
-  }
-});
-
-
-$("signupBtn").addEventListener("click", async () => {
-
-  const isSignup =
-    !$("signupFields").classList.contains("hidden");
-
-  if (!isSignup) {
-    $("signupFields").classList.remove("hidden");
-    $("authTitle").textContent = "Create owner account";
-    $("signupBtn").textContent = "Create account";
-    $("loginBtn").textContent = "Back to login";
-    return;
-  }
-
-  const fullName = $("fullName").value.trim();
-  const email = $("email").value.trim();
-  const password = $("password").value;
-
-  if (!fullName || !email || !password) {
-    message("authMessage", "Fill in all fields.", true);
-    return;
-  }
-
-  if (password.length < 6) {
-    message("authMessage", "Password must be at least 6 characters.", true);
-    return;
-  }
-
-  $("signupBtn").disabled = true;
-  message("authMessage", "Creating account...");
-
-  try {
-    const { data, error } = await db.auth.signUp({
-      email,
-      password,
-      options: {
-        data: { full_name: fullName }
-      }
-    });
-
-    if (error) {
-      message("authMessage", error.message, true);
-    } else if (data.session) {
-      message("authMessage", "Account created successfully.");
-    } else {
-      message(
-        "authMessage",
-        "Account created! Check your email for confirmation."
-      );
-
-      $("signupFields").classList.add("hidden");
-      $("authTitle").textContent = "Welcome back";
-      $("signupBtn").textContent = "Create owner account";
-      $("loginBtn").textContent = "Login";
-    }
-
-  } catch (error) {
-    message("authMessage", error.message, true);
-  } finally {
-    $("signupBtn").disabled = false;
-  }
-});
-
-
-/* =====================================================
-   4. SESSION AND ROLE CHECK
-===================================================== */
-
-async function openDashboard(user) {
-  currentUser = user;
-  $("userLabel").textContent = user.email || "";
-  $("logoutBtn").classList.remove("hidden");
-
-  const { data: profile, error } = await db
-    .from("profiles")
-    .select("full_name, role")
-    .eq("id", user.id)
-    .maybeSingle();
-
-  if (error) {
-    showOnly("authSection");
-    message("authMessage", "Could not load your profile: " + error.message, true);
-    return;
-  }
-
-  if (!profile) {
-    showOnly("authSection");
-    message("authMessage", "Your profile was not found. Check that the signup profile trigger is working.", true);
-    return;
-  }
-
-  currentRole = profile.role;
-
-  if (currentRole === "manager") {
-    showOnly("managerDashboard");
-    await loadManagerDashboard();
-  } else {
-    showOnly("ownerDashboard");
-    await loadOwnerDashboard();
-  }
-
-  startRefresh();
-}
-
-async function checkLogin() {
-  const { data } = await db.auth.getSession();
-  if (data.session) {
-    await openDashboard(data.session.user);
-  } else {
-    showOnly("authSection");
-  }
-}
-
-db.auth.onAuthStateChange((event, session) => {
-  if (event === "SIGNED_OUT") {
-    currentUser = null;
-    currentRole = null;
-    stopRefresh();
-    $("userLabel").textContent = "";
-    $("logoutBtn").classList.add("hidden");
-    showOnly("authSection");
-  }
-
-  if (event === "SIGNED_IN" && session) {
-    setTimeout(() => openDashboard(session.user), 0);
-  }
-});
-
-$("logoutBtn").addEventListener("click", async () => {
-  stopRefresh();
-  await db.auth.signOut();
-});
-
-/* =====================================================
-   5. OWNER DASHBOARD
-===================================================== */
-
-async function loadOwnerDashboard() {
-  if (!currentUser) return;
-
-  const { data: vehicles, error } = await db
-    .from("vehicles")
-    .select("*")
-    .eq("owner_id", currentUser.id)
-    .order("created_at", { ascending: false });
-
-  if (error) {
-    $("ownerVehicles").textContent = error.message;
-    return;
-  }
-
-  ownerVehicleList = vehicles || [];
-
-  $("ownerVehicles").innerHTML = ownerVehicleList.length
-    ? ownerVehicleList.map(v => `
-      <div class="slot">
-        <strong>${safe(v.vehicle_name || "Vehicle")}</strong><br>
-        <span class="muted">${safe(v.vehicle_number)}</span>
-      </div>
-    `).join("")
-    : "No vehicles registered yet.";
-
-  if (!ownerVehicleList.length) {
-    $("ownerVoltage").textContent = "-- V";
-    $("ownerBattery").textContent = "--%";
-    $("ownerCarStatus").textContent = "--";
-    $("ownerSlot").textContent = "Not parked";
-    $("ownerHistory").innerHTML = "";
-    return;
-  }
-
-  const vehicleIds = ownerVehicleList.map(v => v.id);
-
-  const { data: sessions } = await db
-    .from("parking_sessions")
-    .select("id, vehicle_id, slot_id, entry_time, exit_time")
-    .in("vehicle_id", vehicleIds)
-    .order("entry_time", { ascending: false });
-
-  const sessionRows = sessions || [];
-  const slotIds = [...new Set(sessionRows.map(s => s.slot_id).filter(Boolean))];
-
-  let slots = [];
-  if (slotIds.length) {
-    const { data } = await db.from("parking_slots")
-      .select("id, slot_number")
-      .in("id", slotIds);
-    slots = data || [];
-  }
-
-  const slotMap = Object.fromEntries(slots.map(s => [s.id, s.slot_number]));
-  const active = sessionRows.find(s => !s.exit_time);
-
-  $("ownerSlot").textContent = active
-    ? (slotMap[active.slot_id] || "Occupied")
-    : "Not parked";
-
-  $("ownerHistory").innerHTML = sessionRows.map(s => `
-    <tr>
-      <td>${safe(slotMap[s.slot_id] || "--")}</td>
-      <td>${safe(dateText(s.entry_time))}</td>
-      <td>${safe(dateText(s.exit_time))}</td>
-      <td>${s.exit_time ? "Completed" : "Active"}</td>
-    </tr>
-  `).join("");
-
-  const { data: readings } = await db
-    .from("car_live_data")
-    .select("battery_voltage, battery_percentage, motor_status, car_status, created_at")
-    .in("vehicle_id", vehicleIds)
-    .order("created_at", { ascending: false })
-    .limit(1);
-
-  const latest = readings && readings[0];
-
-  if (latest) {
-    $("ownerVoltage").textContent =
-      latest.battery_voltage == null ? "-- V" : Number(latest.battery_voltage).toFixed(2) + " V";
-
-    $("ownerBattery").textContent =
-      latest.battery_percentage == null ? "--%" : latest.battery_percentage + "%";
-
-    $("ownerCarStatus").textContent = latest.car_status || "--";
-  } else {
-    $("ownerVoltage").textContent = "-- V";
-    $("ownerBattery").textContent = "--%";
-    $("ownerCarStatus").textContent = "No live data yet";
-  }
-}
-
-$("registerVehicleBtn").addEventListener("click", async () => {
-  const vehicleName = $("vehicleName").value.trim();
-  const vehicleNumber = $("vehicleNumber").value.trim().toUpperCase();
-
-  if (!vehicleName || !vehicleNumber) {
-    message("vehicleMessage", "Enter vehicle name and number.", true);
-    return;
-  }
-
-  const { error } = await db.from("vehicles").insert({
-    owner_id: currentUser.id,
-    vehicle_name: vehicleName,
-    vehicle_number: vehicleNumber
-  });
-
-  if (error) {
-    message("vehicleMessage", error.message, true);
-  } else {
-    message("vehicleMessage", "Vehicle registered successfully.");
-    $("vehicleName").value = "";
-    $("vehicleNumber").value = "";
-    await loadOwnerDashboard();
-  }
-});
-
-/* =====================================================
-   6. MANAGER DASHBOARD
-===================================================== */
-
-async function loadManagerDashboard() {
-  if (!currentUser || currentRole !== "manager") return;
-
-  const [slotResult, vehicleResult, sessionResult, liveResult] = await Promise.all([
-    db.from("parking_slots").select("*").order("slot_number"),
-    db.from("vehicles").select("id, owner_id, vehicle_name, vehicle_number, profiles(full_name)").order("created_at", { ascending: false }),
-    db.from("parking_sessions").select("*").is("exit_time", null).order("entry_time", { ascending: false }),
-    db.from("car_live_data").select("*").order("created_at", { ascending: false }).limit(30)
-  ]);
-
-  if (slotResult.error) {
-    $("slotGrid").textContent = slotResult.error.message;
-    return;
-  }
-  if (vehicleResult.error) {
-    $("managerVehicles").innerHTML = `<tr><td colspan="3">${safe(vehicleResult.error.message)}</td></tr>`;
-  }
-  if (sessionResult.error) {
-    $("activeSessions").innerHTML = `<tr><td colspan="4">${safe(sessionResult.error.message)}</td></tr>`;
-  }
-
-  managerSlotList = slotResult.data || [];
-  managerVehicleList = vehicleResult.data || [];
-  activeSessionList = sessionResult.data || [];
-
-  const available = managerSlotList.filter(s => s.status === "available").length;
-  const occupied = managerSlotList.filter(s => s.status === "occupied").length;
-
-  $("totalSlots").textContent = managerSlotList.length;
-  $("availableSlots").textContent = available;
-  $("occupiedSlots").textContent = occupied;
-  $("totalVehicles").textContent = managerVehicleList.length;
-
-  $("slotGrid").innerHTML = managerSlotList.map(s => `
-    <div class="slot">
-      <strong>${safe(s.slot_number)}</strong>
-      <p class="${safe(s.status)}">${safe(s.status.toUpperCase())}</p>
-    </div>
-  `).join("");
-
-  $("statusSlot").innerHTML = managerSlotList.map(s =>
-    `<option value="${safe(s.id)}">${safe(s.slot_number)}</option>`
-  ).join("");
-
-  $("sessionVehicle").innerHTML = managerVehicleList.map(v =>
-    `<option value="${safe(v.id)}">${safe(v.vehicle_name)} — ${safe(v.vehicle_number)}</option>`
-  ).join("");
-
-  $("sessionSlot").innerHTML = managerSlotList
-    .filter(s => s.status === "available")
-    .map(s => `<option value="${safe(s.id)}">${safe(s.slot_number)}</option>`)
-    .join("");
-
-  $("managerVehicles").innerHTML = managerVehicleList.map(v => `
-    <tr>
-      <td>${safe(v.vehicle_name)}</td>
-      <td>${safe(v.vehicle_number)}</td>
-      <td>${safe(v.profiles?.full_name || "Owner")}</td>
-    </tr>
-  `).join("");
-
-  const vehicleMap = Object.fromEntries(managerVehicleList.map(v => [v.id, v]));
-
-  $("activeSessions").innerHTML = activeSessionList.map(s => {
-    const v = vehicleMap[s.vehicle_id];
-    const slot = managerSlotList.find(x => x.id === s.slot_id);
-    return `
-      <tr>
-        <td>${safe(v?.vehicle_number || s.vehicle_id)}</td>
-        <td>${safe(slot?.slot_number || "--")}</td>
-        <td>${safe(dateText(s.entry_time))}</td>
-        <td><button class="danger" data-exit="${safe(s.id)}">Record exit</button></td>
-      </tr>
-    `;
-  }).join("") || `<tr><td colspan="4">No active parking sessions.</td></tr>`;
-
-  const latestByVehicle = new Map();
-  (liveResult.data || []).forEach(row => {
-    if (!latestByVehicle.has(row.vehicle_id)) latestByVehicle.set(row.vehicle_id, row);
-  });
-
-  $("managerLiveData").innerHTML = [...latestByVehicle.values()].map(r => `
-    <tr>
-      <td>${safe(vehicleMap[r.vehicle_id]?.vehicle_number || r.vehicle_id)}</td>
-      <td>${r.battery_voltage == null ? "--" : safe(Number(r.battery_voltage).toFixed(2) + " V")}</td>
-      <td>${r.battery_percentage == null ? "--" : safe(r.battery_percentage + "%")}</td>
-      <td>${safe(r.motor_status || "--")}</td>
-      <td>${safe(r.car_status || "--")}</td>
-      <td>${safe(dateText(r.created_at))}</td>
-    </tr>
-  `).join("") || `<tr><td colspan="6">No live readings yet.</td></tr>`;
-}
-
-/* =====================================================
-   7. MANAGER SLOT STATUS
-===================================================== */
-
-$("updateSlotBtn").addEventListener("click", async () => {
-  const slotId = $("statusSlot").value;
-  const status = $("newSlotStatus").value;
-
-  if (!slotId) {
-    message("slotMessage", "Select a slot.", true);
-    return;
-  }
-
-  const { error } = await db.from("parking_slots")
-    .update({ status })
-    .eq("id", slotId);
-
-  if (error) {
-    message("slotMessage", error.message, true);
-  } else {
-    message("slotMessage", "Slot status updated.");
-    await loadManagerDashboard();
-  }
-});
-
-/* =====================================================
-   8. START PARKING SESSION
-===================================================== */
-
-$("startSessionBtn").addEventListener("click", async () => {
-  const vehicleId = $("sessionVehicle").value;
-  const slotId = $("sessionSlot").value;
-
-  if (!vehicleId || !slotId) {
-    message("sessionMessage", "Select a vehicle and an available slot.", true);
-    return;
-  }
-
-  const slot = managerSlotList.find(s => s.id === slotId);
-  if (!slot || slot.status !== "available") {
-    message("sessionMessage", "That slot is not available. Refresh and try again.", true);
-    return;
-  }
-
-  const { data: session, error: sessionError } = await db
-    .from("parking_sessions")
-    .insert({ vehicle_id: vehicleId, slot_id: slotId })
-    .select()
-    .single();
-
-  if (sessionError) {
-    message("sessionMessage", sessionError.message, true);
-    return;
-  }
-
-  const { error: slotError } = await db.from("parking_slots")
-    .update({ status: "occupied" })
-    .eq("id", slotId);
-
-  if (slotError) {
-    message("sessionMessage",
-      "Session was created, but slot status could not be updated. Contact the manager to correct it: " + slotError.message,
-      true
-    );
-  } else {
-    message("sessionMessage", "Vehicle entry recorded.");
-  }
-
-  await loadManagerDashboard();
-});
-
-/* =====================================================
-   9. RECORD PARKING EXIT
-===================================================== */
-
-$("activeSessions").addEventListener("click", async event => {
-  const button = event.target.closest("[data-exit]");
-  if (!button) return;
-
-  const sessionId = button.dataset.exit;
-  const session = activeSessionList.find(s => s.id === sessionId);
-
-  if (!session) return;
-
-  button.disabled = true;
-
-  const { error: exitError } = await db.from("parking_sessions")
-    .update({ exit_time: new Date().toISOString() })
-    .eq("id", sessionId);
-
-  if (exitError) {
-    alert("Could not record exit: " + exitError.message);
-    button.disabled = false;
-    return;
-  }
-
-  const { error: slotError } = await db.from("parking_slots")
-    .update({ status: "available" })
-    .eq("id", session.slot_id);
-
-  if (slotError) {
-    alert("Exit was recorded, but slot status could not be updated: " + slotError.message);
-  }
-
-  await loadManagerDashboard();
-});
-
-$("refreshBtn").addEventListener("click", loadManagerDashboard);
-
-/* =====================================================
-   10. START APPLICATION
-===================================================== */
-
-if (
-  SUPABASE_URL === "YOUR_SUPABASE_PROJECT_URL" ||
-  SUPABASE_KEY === "YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY"
-) {
-  message("authMessage", "First add your Supabase Project URL and publishable/anon key in the code.", true);
-} else {
-  checkLogin();
-}
 </script>
+
 </body>
 </html>
